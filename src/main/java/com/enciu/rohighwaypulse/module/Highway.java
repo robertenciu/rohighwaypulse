@@ -1,5 +1,6 @@
 package com.enciu.rohighwaypulse.module;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,10 +17,19 @@ public class Highway {
     @Id
     private String id;
     private String name;
+    private String description;
     private String status;
-    private Integer length;
+    private Float length;
+    private Float completedLength;
     private Integer estimatedCompletionYear;
-    private Integer totalBudget;
+    private String totalBudget;
     private String fundingSource;
     private List<Segment> segments;
+    private String startCity;
+    private String endCity;
+    @JsonProperty("percentageCompleted")
+    public Float getPercentageCompleted() {
+        if (this.length == 0) return 0f;
+        return (float) Math.round((this.completedLength / this.length) * 100);
+    }
 }
